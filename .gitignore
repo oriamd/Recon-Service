@@ -57,3 +57,11 @@ typings/
 # dotenv environment variables file
 .env
 
+### Your template template
+# jetbrain
+.idea
+
+# configuration and consts
+config.json
+consts.js
+
