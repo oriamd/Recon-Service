@@ -1,0 +1,32 @@
+const express = require('express');
+const router = express.Router();
+const bodyParser = require('body-parser');
+const ApiResponse = require('../helpers/apiResponse');
+const Target = require('./target');
+
+router.use(bodyParser.urlencoded({extended: true}));
+router.use(bodyParser.json());
+
+
+router.get('/', function (req, res) {
+    let id = req.params.id;
+    Target.get()
+        .then(function (data) {
+            res.json(new ApiResponse(true, data))
+        }, function (error) {
+            res.json(new ApiResponse(false, error));
+        });
+});
+
+router.get('/:id', function (req, res) {
+    let id = req.params.id;
+    Target.get(id)
+        .then(function (data) {
+            res.json(new ApiResponse(true, data))
+        }, function (error) {
+            res.json(new ApiResponse(false, error));
+        });
+});
+
+
+module.exports = router;

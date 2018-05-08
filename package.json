@@ -17,9 +17,12 @@
   },
   "homepage": "https://github.com/oriamd/Recon-Service#readme",
   "dependencies": {
+    "body-parser": "^1.18.2",
     "express": "^4.16.3",
     "logger": "git+https://github.com/oriamd/Logger.git",
     "moment": "^2.22.1",
-    "mysql": "^2.15.0"
+    "mysql": "^2.15.0",
+    "promise-mysql": "^3.2.1",
+    "q": "^1.5.1"
   }
 }
