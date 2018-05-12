@@ -11,11 +11,20 @@ class Target {
      */
     get(targetid) {
         if (targetid) {
-            return dbHelper.select('target',`id = ${targetid}`);
-        }else{
+            return dbHelper.select('target', `id = ${targetid}`);
+        } else {
             return dbHelper.select('target');
         }
     }
+
+    new(data) {
+        return dbHelper.insert('target', data);
+    }
+
+    update(targetid, data) {
+        return dbHelper.update('target', data, `id = ${targetid}`);
+    }
+
 
 }
 

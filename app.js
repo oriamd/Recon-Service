@@ -3,8 +3,7 @@ const express = require('express');
 const appLogger = require('Logger')('app');
 const ApiResponse = require('./helpers/apiResponse');
 const app = express();
-
-const TargetController = require('./controllers/targetController')
+const TargetController = require('./controllers/targetController');
 
 
 app.use(function (req, res, next) {
@@ -12,12 +11,11 @@ app.use(function (req, res, next) {
     next()
 });
 
-app.use('/target', TargetController);
-
 app.use(function (err, req, res, next) {
     appLogger(err.stack);
     res.status(500).send(ApiResponse(false, 'Something broke!'));
-
 });
+
+app.use('/target', TargetController);
 
 module.exports = app;
