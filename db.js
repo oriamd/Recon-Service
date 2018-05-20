@@ -1,7 +1,10 @@
 const mysql = require('mysql');
-const config = require('./config');
 const dbLogger = require('Logger')('db');
-
+try{
+    const config = require('./config');
+}catch (e){
+    dbLogger.writeLog(e)
+}
 const host = process.env.DB_HOST || config.db.host;
 
 const con = mysql.createConnection({
