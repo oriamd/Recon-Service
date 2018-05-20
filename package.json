@@ -26,6 +26,6 @@
     "q": "^1.5.1"
   },
   "devDependencies":{
-    "logger": "git+https://github.com/oriamd/Logger.git",
+    "logger": "git+https://github.com/oriamd/Logger.git"
   }
 }
