@@ -1,6 +1,6 @@
 const db = require('./db.js');
 const express = require('express');
-const appLogger = require('Logger')('app');
+const appLogger = require('logger')('app');
 const ApiResponse = require('./helpers/apiResponse');
 const app = express();
 const TargetController = require('./controllers/targetController');

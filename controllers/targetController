@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser');
 const ApiResponse = require('../helpers/apiResponse');
-const targetControllerLogger = require('Logger')('targetController');
+const targetControllerLogger = require('logger')('targetController');
 const Target = require('./target');
 
 router.use(bodyParser.urlencoded({extended: true}));
