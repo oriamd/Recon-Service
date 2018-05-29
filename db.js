@@ -1,5 +1,5 @@
 const mysql = require('mysql');
-const dbLogger = require('logger')('db');
+const dbLogger = require('./helpers/logger')('db');
 const config = require('./config');
 const host = process.env.DB_HOST || config.db.host;
 

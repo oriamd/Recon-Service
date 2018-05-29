@@ -1,6 +1,6 @@
 const app = require('./app');
 const port = process.env.PORT || 3000;
-const serverLogger = require('logger')('server');
+const serverLogger = require('./helpers/logger')('server');
 
 
 const server = app.listen(port, function() {
