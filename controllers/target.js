@@ -1,6 +1,7 @@
 const DBHelper = require('../helpers/dbHelper');
 const con = require('../db');
 const dbHelper = DBHelper(con);
+const moment = require('moment');
 
 class Target {
 
@@ -18,6 +19,7 @@ class Target {
     }
 
     new(data) {
+        data.createdon  = moment().format('YYYY-MM-DD HH:mm:ss');
         return dbHelper.insert('target', data);
     }
 

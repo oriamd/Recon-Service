@@ -14,12 +14,37 @@ const con = mysql.createConnection({
         database: "recon"
     }
 );
+
+con.on('error', function (error) {
+    if (!error.fatal) return;
+    if (error.code !== 'PROTOCOL_CONNECTION_LOST')
+        dbLogger.writeLog(error);
+
+    dbLogger.writeLog('> Re-connecting lost MySQL connection: ' + error.stack);
+
+    con.connect();
+});
+
+
 con.connect(function (err) {
     if (err) {
         dbLogger.writeLog(err);
     } else {
         dbLogger.writeLog("db connected to " + host);
     }
+});
+
+con.on('error', function(err) {
+    if (!err.fatal) {
+        return;
+    }
+    if (err.code !== 'PROTOCOL_CONNECTION_LOST') {
+        throw err;
+    }
+    console.log('Re-connecting lost connection: ' + err.stack);
+    sql = mysql.createConnection(connection.config);
+    handleDisconnect(sql);
+    sql.connect();
 });
 
 module.exports = con;
