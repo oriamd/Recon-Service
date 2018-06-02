@@ -12,14 +12,18 @@ class Target {
      */
     get(targetid) {
         if (targetid) {
-            return dbHelper.select('target', `id = ${targetid}`);
+            // return dbHelper.select('target', `id = ${targetid}`);
+            return dbHelper.query(`select target.*, reconunit.name as reconunit_name from target INNER join reconunit on target.reconunitid = reconunit.id where target.id = ${targetid}`)
         } else {
-            return dbHelper.select('target');
+            return dbHelper.query(`select target.*, reconunit.name as reconunit_name from target INNER join reconunit on target.reconunitid = reconunit.id`)
         }
     }
 
     new(data) {
         data.createdon  = moment().format('YYYY-MM-DD HH:mm:ss');
+        if(data.type == "" || data.type == null){
+            data.type = 'target';
+        }
         return dbHelper.insert('target', data);
     }
 

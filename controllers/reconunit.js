@@ -22,7 +22,7 @@ class ReconUnit {
     }
 
     update(reconunitid, data) {
-        return dbHelper.update('reconunit', data, `id = ${targetid}`);
+        return dbHelper.update('reconunit', data, `id = ${reconunitid}`);
     }
 
 
