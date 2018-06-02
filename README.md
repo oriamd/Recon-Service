@@ -25,6 +25,7 @@ Military target management system
               "azimuth": null,
               "size": 0,
               "type": "target",
+              "reconunit_name" :"Headquarters",
               "createdon": "2018-06-01 16:24:08"
             }
         ]
@@ -50,6 +51,7 @@ Military target management system
             "azimuth": null,
             "size": 0,
             "type": "target",
+            "reconunit_name" :"Headquarters",
             "createdon": "2018-06-01 16:24:08"
         }
     }
