@@ -27,6 +27,9 @@ class Target {
         return dbHelper.update('target', data, `id = ${targetid}`);
     }
 
+    delete(targetid){
+        return dbHelper.delete('target', 'id='+targetid);
+    }
 
 }
 

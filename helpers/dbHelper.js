@@ -71,6 +71,24 @@ class DBHelper {
         })
     }
 
+    delete(table, where) {
+        return new Promise(function (resolve, reject) {
+            if (table == null || where == null) {
+                return reject('Wrong arguments')
+            }
+
+            let query = `DELETE FROM ${table} WHERE ${where}`;
+
+            con.query(query, function (error, results, fields) {
+                if (error) {
+                    return reject(error)
+                } else {
+                    return resolve(results)
+                }
+            });
+        })
+    }
+
     query(query) {
         return new Promise(function (resolve, reject) {
             con.query(query, function (error, results, fields) {

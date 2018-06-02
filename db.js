@@ -7,7 +7,7 @@ try{
 
 const host = process.env.DB_HOST || config.db.host;
 
-const con = mysql.createConnection({
+var connection = mysql.createConnection({
         host: host,
         user: process.env.DB_USERNAME || config.db.user,
         password: process.env.DB_PASSWORD || config.db.password,
@@ -15,18 +15,18 @@ const con = mysql.createConnection({
     }
 );
 
-con.on('error', function (error) {
+connection.on('error', function (error) {
     if (!error.fatal) return;
     if (error.code !== 'PROTOCOL_CONNECTION_LOST')
         dbLogger.writeLog(error);
 
     dbLogger.writeLog('> Re-connecting lost MySQL connection: ' + error.stack);
 
-    con.connect();
+    connection.connect();
 });
 
 
-con.connect(function (err) {
+connection.connect(function (err) {
     if (err) {
         dbLogger.writeLog(err);
     } else {
@@ -34,17 +34,24 @@ con.connect(function (err) {
     }
 });
 
-con.on('error', function(err) {
-    if (!err.fatal) {
-        return;
-    }
-    if (err.code !== 'PROTOCOL_CONNECTION_LOST') {
-        throw err;
-    }
-    console.log('Re-connecting lost connection: ' + err.stack);
-    sql = mysql.createConnection(connection.config);
-    handleDisconnect(sql);
-    sql.connect();
-});
+function handleDisconnect(tempConn) {
+    tempConn.on('error', function(err) {
+        if (!err.fatal) {
+            return;
+        }
 
-module.exports = con;
+        if (err.code !== 'PROTOCOL_CONNECTION_LOST') {
+            throw err;
+        }
+
+        dbLogger.writeLog('Re-connecting lost connection: ' + err.stack);
+
+        connection = mysql.createConnection(tempConn.config);
+        handleDisconnect(connection);
+        connection.connect();
+    });
+}
+
+handleDisconnect(connection);
+
+module.exports = connection;
