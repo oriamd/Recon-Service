@@ -4,7 +4,8 @@ const appLogger = require('./helpers/logger')('app');
 const ApiResponse = require('./helpers/apiResponse');
 const app = express();
 const TargetController = require('./controllers/targetController');
-const ReconUnit = require('./controllers/reconunitController');
+const ReconUnitController = require('./controllers/reconunitController');
+const MessageController = require('./controllers/messageController');
 
 
 app.use(function (req, res, next) {
@@ -19,6 +20,8 @@ app.use(function (err, req, res, next) {
 
 app.use('/target', TargetController);
 
-app.use('/reconunit', ReconUnit);
+app.use('/reconunit', ReconUnitController );
+
+app.use('/message', MessageController);
 
 module.exports = app;

@@ -1,9 +1,10 @@
 const mysql = require('mysql');
 const dbLogger = require('./helpers/logger')('db');
-try{
+try {
     require.resolve('./config');
     var config = require('./config');
-}catch(e){}
+} catch (e) {
+}
 
 const host = process.env.DB_HOST || config.db.host;
 
@@ -11,7 +12,8 @@ var connection = mysql.createConnection({
         host: host,
         user: process.env.DB_USERNAME || config.db.user,
         password: process.env.DB_PASSWORD || config.db.password,
-        database: "recon"
+        database: "recon",
+        dateStrings: true
     }
 );
 
@@ -35,7 +37,7 @@ connection.connect(function (err) {
 });
 
 function handleDisconnect(tempConn) {
-    tempConn.on('error', function(err) {
+    tempConn.on('error', function (err) {
         if (!err.fatal) {
             return;
         }
