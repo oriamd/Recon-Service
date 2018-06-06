@@ -3,7 +3,7 @@ const con = require('../db');
 const dbHelper = DBHelper(con);
 const moment = require('moment');
 
-const TimeWindowInSec =  180;
+const TimeWindowInSec =  5;
 
 class Message{
 
