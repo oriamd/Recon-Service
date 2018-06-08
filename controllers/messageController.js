@@ -10,20 +10,9 @@ router.use(bodyParser.json());
 
 
 router.get('/', function (req, res) {
-    message.get()
-        .then(function (data) {
-                res.json(new ApiResponse(true, data))
-            }
-        ).catch(function (error) {
-        messageControllerLogger.writeLog(error);
-        res.json(new ApiResponse(false, error));
-    });
-});
-
-router.get('/:id', function (req, res) {
-    let id = req.params.id;
-    let isAll = req.query.all
-    if(isAll == '1'){
+    let isAll = req.query.all;
+    let timeFrame = req.query.timeFrame;
+    if(timeFrame == '-1'){
         message.getAll(id)
             .then(function (data) {
                     res.json(new ApiResponse(true, data))
@@ -33,7 +22,32 @@ router.get('/:id', function (req, res) {
             res.json(new ApiResponse(false, error));
         });
     }else {
-        message.get(id)
+        message.get(undefined, timeFrame)
+            .then(function (data) {
+                    res.json(new ApiResponse(true, data))
+                }
+            ).catch(function (error) {
+            messageControllerLogger.writeLog(error);
+            res.json(new ApiResponse(false, error));
+        });
+    }
+});
+
+router.get('/:id', function (req, res) {
+    let id = req.params.id;
+    let timeFrame = req.query.timeFrame;
+
+    if(timeFrame == '-1'){
+        message.getAll(id)
+            .then(function (data) {
+                    res.json(new ApiResponse(true, data))
+                }
+            ).catch(function (error) {
+            messageControllerLogger.writeLog(error);
+            res.json(new ApiResponse(false, error));
+        });
+    }else {
+        message.get(id, timeFrame)
             .then(function (data) {
                     res.json(new ApiResponse(true, data))
                 }

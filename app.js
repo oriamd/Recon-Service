@@ -9,7 +9,7 @@ const MessageController = require('./controllers/messageController');
 
 
 app.use(function (req, res, next) {
-    appLogger.writeLog(`New Request '${req.originalUrl}' from  ${req.ip}`);
+    appLogger.writeLog(`New Request ${req.method} '${req.originalUrl}' from  ${req.ip}`);
     next()
 });
 
