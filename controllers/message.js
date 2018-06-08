@@ -21,6 +21,19 @@ class Message{
         }
     }
 
+    /**
+     * Get All Messages
+     * @param destReconunitid if provided then return only messages referred  to reconunitid
+     * @return Promise(data/error)
+     */
+    getAll(destReconunitid) {
+        let now = moment();
+        if(destReconunitid != null){
+            return dbHelper.query(`SELECT * FROM message WHERE dest_reconunitid = ${destReconunitid}`)
+        }else{
+            return dbHelper.query(`SELECT * FROM message`)
+        }
+    }
 
     new(data) {
         data.createdon  = moment().format('YYYY-MM-DD HH:mm:ss');

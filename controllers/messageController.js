@@ -22,14 +22,26 @@ router.get('/', function (req, res) {
 
 router.get('/:id', function (req, res) {
     let id = req.params.id;
-    message.get(id)
-        .then(function (data) {
-                res.json(new ApiResponse(true, data))
-            }
-        ).catch(function (error) {
-        messageControllerLogger.writeLog(error);
-        res.json(new ApiResponse(false, error));
-    });
+    let isAll = req.query.all
+    if(isAll == '1'){
+        message.getAll(id)
+            .then(function (data) {
+                    res.json(new ApiResponse(true, data))
+                }
+            ).catch(function (error) {
+            messageControllerLogger.writeLog(error);
+            res.json(new ApiResponse(false, error));
+        });
+    }else {
+        message.get(id)
+            .then(function (data) {
+                    res.json(new ApiResponse(true, data))
+                }
+            ).catch(function (error) {
+            messageControllerLogger.writeLog(error);
+            res.json(new ApiResponse(false, error));
+        });
+    }
 });
 
 router.post('/', function (req, res) {
