@@ -225,10 +225,10 @@ Military target management system
 *   **URL**
 
     `/message?timeFrame={number}`
-    
-    timeFrame : Masseges that was created less then then timeFrame
-    if not set then uses a default timeFrame
-    timeFrame=-1 to get all messages wihtou timeFrame
+*   **Prams**
+    `timeFrame` : Masseges that was created less then then timeFrame.</br>
+    If not set then uses a default timeFrame.</br>
+    timeFrame=-1 to get all messages wihtou timeFrame</br>
     
     
 *   **Success Response:**
@@ -252,9 +252,13 @@ Military target management system
 *   **URL**
 
     `/message/:id?timeFrame={number}`
-    timeFrame : Masseges that was created less then then timeFrame
-    if not set then uses a default timeFrame
-    timeFrame=-1 to get all messages wihtou timeFrame
+    
+*   **Prams**
+    `timeFrame` : Masseges that was created less then then timeFrame.</br>
+    If not set then uses a default timeFrame. </br>
+    timeFrame=-1 to get all messages wihtou timeFrame.
+    
+    
     
       
 *   **Success Response:**
