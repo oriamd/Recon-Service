@@ -17,6 +17,14 @@ var connection = mysql.createConnection({
     }
 );
 
+var del = connection._protocol._delegateError;
+connection._protocol._delegateError = function(err, sequence){
+    if (err.fatal) {
+        console.trace('fatal error: ' + err.message);
+    }
+    return del.call(this, err, sequence);
+};
+
 connection.on('error', function (error) {
     if (!error.fatal) return;
     if (error.code !== 'PROTOCOL_CONNECTION_LOST')
