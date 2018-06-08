@@ -221,10 +221,16 @@ Military target management system
 
 ## Message
 
-### `GET` all latest Messages on TimeWindow
+### `GET` all latest Messages on TimeFrame
 *   **URL**
 
-    `/message`
+    `/message?timeFrame={number}`
+*   **Prams**
+    
+    `timeFrame` : Masseges that was created less then then timeFrame.</br>
+    If not set then uses a default timeFrame.</br>
+    timeFrame=-1 to get all messages wihtou timeFrame</br>
+    
     
 *   **Success Response:**
 
@@ -243,10 +249,19 @@ Military target management system
     }
     ```
   
-### `GET` all latest Messages destined  for Reconunit on TimeWindow
+### `GET` all latest Messages destined  for Reconunit on TimeFrame
 *   **URL**
 
-    `/message/:id`
+    `/message/:id?timeFrame={number}`
+    
+*   **Prams**
+    
+    `timeFrame` : Masseges that was created less then then timeFrame.</br>
+    If not set then uses a default timeFrame. </br>
+    timeFrame=-1 to get all messages wihtou timeFrame.
+    
+    
+    
       
 *   **Success Response:**
 
