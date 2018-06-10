@@ -1,10 +1,6 @@
-const con = require('../db.js');
+const db = require('../db.js');
 
 class DBHelper {
-
-    constructor(mysqlConnection) {
-        this.con = mysqlConnection;
-    }
 
     select(from, where) {
         return new Promise(function (resolve, reject) {
@@ -14,7 +10,7 @@ class DBHelper {
                 query = `${query} WHERE ${where}`;
             }
 
-            con.query(query, function (error, results, fields) {
+            db.connection.query(query, function (error, results, fields) {
                 if (error) {
                     return reject(error)
                 } else {
@@ -36,7 +32,7 @@ class DBHelper {
 
             query = `INSERT INTO ${into} ${fieldsStr} VALUES ${valuesStr}`;
 
-            con.query(query, function (error, results, fields) {
+            db.connection.query(query, function (error, results, fields) {
                 if (error) {
                     return reject(error)
                 } else {
@@ -61,7 +57,7 @@ class DBHelper {
 
             query = `UPDATE ${table} SET ${setStr} WHERE ${where}`;
 
-            con.query(query, function (error, results, fields) {
+            db.connection.query(query, function (error, results, fields) {
                 if (error) {
                     return reject(error)
                 } else {
@@ -79,7 +75,7 @@ class DBHelper {
 
             let query = `DELETE FROM ${table} WHERE ${where}`;
 
-            con.query(query, function (error, results, fields) {
+            db.connection.query(query, function (error, results, fields) {
                 if (error) {
                     return reject(error)
                 } else {
@@ -91,7 +87,7 @@ class DBHelper {
 
     query(query) {
         return new Promise(function (resolve, reject) {
-            con.query(query, function (error, results, fields) {
+            db.connection.query(query, function (error, results, fields) {
                 if (error) {
                     return reject(error)
                 } else {

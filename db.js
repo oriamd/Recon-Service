@@ -5,38 +5,28 @@ try {
     var config = require('./config');
 } catch (e) {
 }
-
 const host = process.env.DB_HOST || config.db.host;
+const conf = {
+    host: host,
+    user: process.env.DB_USERNAME || config.db.user,
+    password: process.env.DB_PASSWORD || config.db.password,
+    database: "recon",
+    dateStrings: true
+};
+var db = {};
 
-var connection = mysql.createConnection({
-        host: host,
-        user: process.env.DB_USERNAME || config.db.user,
-        password: process.env.DB_PASSWORD || config.db.password,
-        database: "recon",
-        dateStrings: true
-    }
-);
 
-var del = connection._protocol._delegateError;
-connection._protocol._delegateError = function(err, sequence){
+db.connection = mysql.createConnection(conf);
+var del = db.connection._protocol._delegateError;
+
+db.connection._protocol._delegateError = function(err, sequence){
     if (err.fatal) {
         console.trace('fatal error: ' + err.message);
     }
     return del.call(this, err, sequence);
 };
 
-connection.on('error', function (error) {
-    if (!error.fatal) return;
-    if (error.code !== 'PROTOCOL_CONNECTION_LOST')
-        dbLogger.writeLog(error);
-
-    dbLogger.writeLog('> Re-connecting lost MySQL connection: ' + error.stack);
-
-    connection.connect();
-});
-
-
-connection.connect(function (err) {
+db.connection.connect(function (err) {
     if (err) {
         dbLogger.writeLog(err);
     } else {
@@ -56,12 +46,11 @@ function handleDisconnect(tempConn) {
 
         dbLogger.writeLog('Re-connecting lost connection: ' + err.stack);
 
-        connection = mysql.createConnection(tempConn.config);
+        db.connection = mysql.createConnection(conf);
         handleDisconnect(connection);
-        connection.connect();
+        db.connection.connect();
     });
 }
+handleDisconnect(db.connection);
 
-handleDisconnect(connection);
-
-module.exports = connection;
+module.exports = db;
