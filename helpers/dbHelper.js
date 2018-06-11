@@ -10,13 +10,7 @@ class DBHelper {
                 query = `${query} WHERE ${where}`;
             }
 
-            db.connection.query(query, function (error, results, fields) {
-                if (error) {
-                    return reject(error)
-                } else {
-                    return resolve(results)
-                }
-            });
+            resolve(db.query(query))
         })
     }
 
@@ -32,13 +26,7 @@ class DBHelper {
 
             query = `INSERT INTO ${into} ${fieldsStr} VALUES ${valuesStr}`;
 
-            db.connection.query(query, function (error, results, fields) {
-                if (error) {
-                    return reject(error)
-                } else {
-                    return resolve(results)
-                }
-            });
+            resolve(db.query(query))
         })
     }
 
@@ -57,13 +45,7 @@ class DBHelper {
 
             query = `UPDATE ${table} SET ${setStr} WHERE ${where}`;
 
-            db.connection.query(query, function (error, results, fields) {
-                if (error) {
-                    return reject(error)
-                } else {
-                    return resolve(results)
-                }
-            });
+            resolve(db.query(query))
         })
     }
 
@@ -75,30 +57,16 @@ class DBHelper {
 
             let query = `DELETE FROM ${table} WHERE ${where}`;
 
-            db.connection.query(query, function (error, results, fields) {
-                if (error) {
-                    return reject(error)
-                } else {
-                    return resolve(results)
-                }
-            });
+            resolve(db.query(query))
         })
     }
 
     query(query) {
-        return new Promise(function (resolve, reject) {
-            db.connection.query(query, function (error, results, fields) {
-                if (error) {
-                    return reject(error)
-                } else {
-                    return resolve(results)
-                }
-            });
-        })
+        return db.query(query);
     }
 
 }
 
-module.exports = function (mysqlConnection) {
-    return new DBHelper(mysqlConnection);
+module.exports = function () {
+    return new DBHelper();
 };
