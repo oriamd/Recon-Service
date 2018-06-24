@@ -13,28 +13,41 @@ router.get('/', function (req, res) {
     let id = req.params.id;
     Target.get()
         .then(function (data) {
-            res.json(new ApiResponse(true, data))
-        }
+                res.json(new ApiResponse(true, data))
+            }
         ).catch(function (error) {
-            targetControllerLogger.writeLog(error);
-            res.json(new ApiResponse(false, error));
-        });
+        targetControllerLogger.writeLog(error);
+        res.json(new ApiResponse(false, error));
+    });
+
 });
 
 router.get('/:id', function (req, res) {
     let id = req.params.id;
-    Target.get(id)
-        .then(function (data) {
-            if(data.length > 0){
-                res.json(new ApiResponse(true, data[0]))
-            }else{
-                throw 'Record not found'
-            }
-        })
-        .catch(function (error) {
-            targetControllerLogger.writeLog(error);
-            res.json(new ApiResponse(false, error));
-        })
+    if (id != 'reset') {
+        Target.get(id)
+            .then(function (data) {
+                if (data.length > 0) {
+                    res.json(new ApiResponse(true, data[0]))
+                } else {
+                    throw 'Record not found'
+                }
+            })
+            .catch(function (error) {
+                targetControllerLogger.writeLog(error);
+                res.json(new ApiResponse(false, error));
+            })
+    } else {
+        Target.reset()
+            .then(function () {
+                res.json(new ApiResponse(true, ""))
+            })
+            .catch(function (error) {
+                targetControllerLogger.writeLog(error);
+                res.json(new ApiResponse(false, error));
+            });
+    }
+
 });
 
 router.post('/', function (req, res) {

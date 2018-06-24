@@ -35,6 +35,10 @@ class Target {
         return dbHelper.delete('target', 'id='+targetid);
     }
 
+    reset(){
+        return dbHelper.delete('target', "type!='warning'");
+    }
+
 }
 
 module.exports = new Target;
