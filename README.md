@@ -164,7 +164,9 @@ Military target management system
         "success": true,
         "data": {
             "id": 1,
-            "name": "headquarters"
+            "name": "headquarters",
+            "longitude": "32.3232",
+            "latitude": "34.342"
         }
     }
     ```
